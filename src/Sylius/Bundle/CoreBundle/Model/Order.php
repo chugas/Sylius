@@ -13,6 +13,8 @@ namespace Sylius\Bundle\CoreBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Payum\Model\DetailsAggregateInterface;
+use Payum\Model\DetailsAwareInterface;
 use Sylius\Bundle\AddressingBundle\Model\AddressInterface;
 use Sylius\Bundle\CartBundle\Model\Cart;
 use Sylius\Bundle\PaymentsBundle\Model\PaymentInterface;
@@ -23,7 +25,7 @@ use Sylius\Bundle\SalesBundle\Model\AdjustmentInterface;
  *
  * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
  */
-class Order extends Cart implements OrderInterface
+class Order extends Cart implements OrderInterface, DetailsAwareInterface, DetailsAggregateInterface
 {
     /**
      * User.
@@ -73,6 +75,11 @@ class Order extends Cart implements OrderInterface
      * @var string
      */
     protected $currency;
+
+    /**
+     * @var object
+     */
+    protected $paymentDetails;
 
     /**
      * Constructor.
@@ -425,5 +432,21 @@ class Order extends Cart implements OrderInterface
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDetails()
+    {
+        return $this->paymentDetails;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setDetails($details)
+    {
+        $this->paymentDetails = $details;
     }
 }

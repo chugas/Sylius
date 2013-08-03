@@ -11,6 +11,7 @@
 
 namespace Sylius\Bundle\CoreBundle\Checkout\Step;
 
+use Sylius\Bundle\CoreBundle\Model\Order;
 use Sylius\Bundle\FlowBundle\Process\Context\ProcessContextInterface;
 use Sylius\Bundle\SalesBundle\Model\OrderInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -37,15 +38,19 @@ class FinalizeStep extends CheckoutStep
      */
     public function forwardAction(ProcessContextInterface $context)
     {
+        /** @var Order $order */
         $order = $this->createOrder($context);
 
         $this->saveOrder($order);
         $this->getCartProvider()->abandonCart();
 
-        $translator = $this->get('translator');
-        $this->get('session')->getFlashBag()->add('success', $translator->trans('sylius.checkout.success', array(), 'flashes'));
+        $captureToken = $this->get('payum.token_manager')->createTokenForCaptureRoute(
+            $order->getPayment()->getMethod()->getGateway(),
+            $order,
+            'sylius_core_checkout_finished'
+        );
 
-        return $this->complete();
+        return $this->redirect($captureToken->getTargetUrl());
     }
 
     private function renderStep(ProcessContextInterface $context, OrderInterface $order)

@@ -245,6 +245,12 @@
             <argument type="service" id="sylius.settings.manager" />
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
         </service>
+
+        <service id="sylius.payum.action.capture_order_with_paypal" class="Sylius\Bundle\CoreBundle\Payum\Action\CaptureOrderWithPaypalAction" />
+        <service id="sylius.payum.action.capture_order_with_stripe" class="Sylius\Bundle\CoreBundle\Payum\Action\CaptureOrderWithStripeAction" >
+            <argument type="service" id="service_container" />
+        </service>
+        <service id="sylius.payum.action.order_status" class="Sylius\Bundle\CoreBundle\Payum\Action\OrderStatusAction" />
     </services>
 
 </container>
