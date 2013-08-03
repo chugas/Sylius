@@ -55,6 +55,8 @@
         "knplabs/knp-menu-bundle":              "2.0.*",
         "liip/imagine-bundle":                  "0.9.*",
         "knplabs/knp-snappy-bundle":           "dev-master",
+        "payum/payum-bundle":                   "0.5.*",
+        "payum/paypal-express-checkout-nvp":    "0.5.*",
         "athari/yalinqo":                       "*"
     },
     "require-dev": {

@@ -2167,6 +2167,54 @@
             "time": "2013-07-19 00:03:27"
         },
         {
+            "name": "kriswallsmith/buzz",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kriswallsmith/Buzz.git",
+                "reference": "d7545a943496c401f7f5248f285e44b33c86905e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/d7545a943496c401f7f5248f285e44b33c86905e",
+                "reference": "d7545a943496c401f7f5248f285e44b33c86905e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "ext-curl": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Buzz": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
+                }
+            ],
+            "description": "Lightweight HTTP client",
+            "homepage": "https://github.com/kriswallsmith/Buzz",
+            "keywords": [
+                "curl",
+                "http client"
+            ],
+            "time": "2013-06-04 15:32:22"
+        },
+        {
             "name": "liip/doctrine-cache-bundle",
             "version": "dev-master",
             "target-dir": "Liip/DoctrineCacheBundle",
@@ -2568,6 +2616,210 @@
                 "paging"
             ],
             "time": "2013-06-13 22:25:28"
+        },
+        {
+            "name": "payum/paypal-express-checkout-nvp",
+            "version": "0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Payum/PaypalExpressCheckoutNvp.git",
+                "reference": "0.5.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Payum/PaypalExpressCheckoutNvp/zipball/0.5.0",
+                "reference": "0.5.0",
+                "shasum": ""
+            },
+            "require": {
+                "kriswallsmith/buzz": "*",
+                "payum/payum": "0.5.*",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "doctrine/orm": "2.2.*",
+                "ext-curl": "*",
+                "ext-pdo_sqlite": "*",
+                "fp/testo": "dev-master",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Payum\\Paypal\\ExpressCheckout\\Nvp": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kotlyar Maksim",
+                    "email": "kotlyar.maksim@gmail.com"
+                }
+            ],
+            "description": "Paypal express checkout",
+            "keywords": [
+                "digital goods",
+                "express checkout",
+                "payment",
+                "paypal",
+                "recurring payment"
+            ],
+            "time": "2013-06-03 08:00:24"
+        },
+        {
+            "name": "payum/payum",
+            "version": "0.5.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Payum/Payum.git",
+                "reference": "1f4f3bb4ad0d56d985f3dd1a88fb3bd5e47e55d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Payum/Payum/zipball/1f4f3bb4ad0d56d985f3dd1a88fb3bd5e47e55d4",
+                "reference": "1f4f3bb4ad0d56d985f3dd1a88fb3bd5e47e55d4",
+                "shasum": ""
+            },
+            "require": {
+                "kriswallsmith/buzz": "*",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "doctrine/orm": "2.*",
+                "ext-curl": "*",
+                "ext-pdo_sqlite": "*",
+                "fp/testo": "dev-master",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "doctrine/orm": "If you want to store models to database using doctrin2 ORM",
+                "payum/authorize-net-aim": "If you want to use Authorize.Net AIM payment gateway",
+                "payum/be2bill": "If you want to use be2bill payment gateway",
+                "payum/omnipay-bridge": "If you want to use omnipay's gateways",
+                "payum/paypal-express-checkout-nvp": "If you want to use paypal express checkout, digital goods or recurring payments",
+                "payum/paypal-ipn": "If you want to use paypal instant payment notifications(Paypal IPN)",
+                "payum/paypal-pro-checkout-nvp": "If you want to use paypal pro checkout"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Payum": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kotlyar Maksim",
+                    "email": "kotlyar.maksim@gmail.com"
+                }
+            ],
+            "description": "Payment lib",
+            "keywords": [
+                "authorize.net",
+                "be2bill",
+                "omnipay gateways",
+                "payment",
+                "paypal",
+                "paypal digital goods",
+                "paypal ipn",
+                "paypal recurring payments"
+            ],
+            "time": "2013-07-15 14:00:18"
+        },
+        {
+            "name": "payum/payum-bundle",
+            "version": "0.5.x-dev",
+            "target-dir": "Payum/Bundle/PayumBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Payum/PayumBundle.git",
+                "reference": "0.5.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Payum/PayumBundle/zipball/0.5.5",
+                "reference": "0.5.5",
+                "shasum": ""
+            },
+            "require": {
+                "payum/payum": "0.5.*",
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": "2.*"
+            },
+            "require-dev": {
+                "doctrine/orm": "*",
+                "fp/testo": "@dev",
+                "payum/authorize-net-aim": "0.5.*",
+                "payum/be2bill": "0.5.*",
+                "payum/omnipay-bridge": "0.5.*",
+                "payum/payex": "0.5.*",
+                "payum/paypal-express-checkout-nvp": "0.5.*",
+                "payum/paypal-pro-checkout-nvp": "0.5.*",
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "payum/authorize-net-aim": "If you want to use authorize.net gateway",
+                "payum/be2bill": "If you want to use be2bill gateway",
+                "payum/omnipay-bridge": "If you want to use omnipay provided gateways",
+                "payum/payex": "If you want to use payex gateway",
+                "payum/paypal-express-checkout-nvp": "If you want to use paypal express checkout nvp gateway",
+                "payum/paypal-pro-checkout-nvp": "If you want to use paypal pro checkout nvp gateway"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Payum\\Bundle\\PayumBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kotlyar Maksim",
+                    "email": "kotlyar.maksim@gmail.com"
+                },
+                {
+                    "name": "Community",
+                    "homepage": "https://github.com/Payum/PayumBundle/graphs/contributors"
+                }
+            ],
+            "description": "The payment bundle integrates payum libs into symfony2 framework",
+            "homepage": "https://github.com/Payum/PayumBundle",
+            "keywords": [
+                "authorize.net",
+                "be2bill",
+                "omnipay",
+                "payex",
+                "payment",
+                "paypal",
+                "paypal express checkout",
+                "paypal pro checkout",
+                "paypal recurring payment"
+            ],
+            "time": "2013-08-02 17:20:10"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -3136,6 +3388,9 @@
                 "phpspec/phpspec": "2.0.*@dev",
                 "symfony/form": "~2.3",
                 "twig/twig": "~1.0"
+            },
+            "suggest": {
+                "friendsofsymfony/rest-bundle": "*"
             },
             "type": "symfony-bundle",
             "extra": {
