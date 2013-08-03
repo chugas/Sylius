@@ -74,6 +74,10 @@ class Order extends Cart implements OrderInterface
      */
     protected $currency;
 
+    protected $paymentDetails;
+
+    protected $paymentStatus;
+
     /**
      * Constructor.
      */

@@ -44,6 +44,10 @@
         </many-to-one>
 
         <field name="currency" length="3" />
+
+        <field name="paymentDetails" type="object" />
+
+        <field name="paymentStatus" type="integer" />
     </mapped-superclass>
 
 </doctrine-mapping>
