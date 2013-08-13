@@ -130,3 +130,30 @@ knp_snappy:
         enabled:    true
         binary:     /usr/bin/wkhtmltoimage
         options:    []
+
+payum:
+    contexts:
+        paypal_express_checkout:
+            paypal_express_checkout_nvp:
+                api:
+                    options:
+                        username:  %paypal.express_checkout.username%
+                        password:  %paypal.express_checkout.password%
+                        signature: %paypal.express_checkout.signature%
+                        sandbox: true
+
+            storages:
+                Sylius\Bundle\CoreBundle\Model\Order:
+                    doctrine:
+                        driver: orm
+                        payment_extension: true
+                Sylius\Bundle\CoreBundle\Model\PaypalPaymentDetails:
+                    filesystem:
+                        storage_dir: %kernel.root_dir%/Resources/payments
+                        id_property: id
+                        payment_extension: true
+                Sylius\Bundle\CoreBundle\Model\TokenizedDetails:
+                    filesystem:
+                        storage_dir: %kernel.root_dir%/Resources/payments
+                        id_property: token
+                        payment_extension: true

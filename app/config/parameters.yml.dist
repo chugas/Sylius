@@ -17,3 +17,8 @@ parameters:
     sylius.currency:          EUR
 
     sylius.cache:             file_system
+
+    paypal.express_checkout.username: EDITME
+    paypal.express_checkout.password: EDITME
+    paypal.express_checkout.signature: EDITME
+    paypal.express_checkout.sandbox: true
