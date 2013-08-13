@@ -42,10 +42,18 @@ class FinalizeStep extends CheckoutStep
         $this->saveOrder($order);
         $this->getCartProvider()->abandonCart();
 
-        $translator = $this->get('translator');
-        $this->get('session')->getFlashBag()->add('success', $translator->trans('sylius.checkout.success', array(), 'flashes'));
+        $captureToken = $this->get('payum.token_manager')->createTokenForCaptureRoute(
+            'paypal_express_checkout',
+            $order,
+            'sylius_homepage'
+        );
 
-        return $this->complete();
+        return $this->redirect($captureToken->getTargetUrl());
+//
+////        $translator = $this->get('translator');
+////        $this->get('session')->getFlashBag()->add('success', $translator->trans('sylius.checkout.success', array(), 'flashes'));
+//
+//        return $this->complete();
     }
 
     private function renderStep(ProcessContextInterface $context, OrderInterface $order)
