@@ -1,7 +1,3 @@
-sylius_core_checkout_finished:
-    pattern:  /checkout/finished
-    defaults:  { _controller: SyliusCoreBundle:CheckoutFinished:finished }
-
 sylius_installer:
     resource: @SyliusInstallerBundle/Resources/config/routing.yml
 
