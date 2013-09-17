@@ -132,6 +132,13 @@ knp_snappy:
         options:    []
 
 payum:
+    security:
+        token_storage:
+            Sylius\Bundle\CoreBundle\Model\PaymentToken:
+                filesystem:
+                    storage_dir: %kernel.root_dir%/Resources/payments
+                    id_property: hash
+
     contexts:
         paypal_express_checkout:
             paypal_express_checkout_nvp:
@@ -149,12 +156,7 @@ payum:
                 Sylius\Bundle\CoreBundle\Model\Order:
                     doctrine:
                         driver: orm
-                        payment_extension: true
-                Sylius\Bundle\CoreBundle\Model\TokenizedDetails:
-                    filesystem:
-                        storage_dir: %kernel.root_dir%/Resources/payments
-                        id_property: token
-                        payment_extension: true
+
         stripe:
             omnipay:
                 type: Stripe
@@ -169,9 +171,4 @@ payum:
                 Sylius\Bundle\CoreBundle\Model\Order:
                     doctrine:
                         driver: orm
-                        payment_extension: true
-                Sylius\Bundle\CoreBundle\Model\TokenizedDetails:
-                    filesystem:
-                        storage_dir: %kernel.root_dir%/Resources/payments
-                        id_property: token
                         payment_extension: true

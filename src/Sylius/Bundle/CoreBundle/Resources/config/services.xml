@@ -19,7 +19,7 @@
         <parameter key="sylius.checkout_step.addressing.class">Sylius\Bundle\CoreBundle\Checkout\Step\AddressingStep</parameter>
         <parameter key="sylius.checkout_step.shipping.class">Sylius\Bundle\CoreBundle\Checkout\Step\ShippingStep</parameter>
         <parameter key="sylius.checkout_step.payment.class">Sylius\Bundle\CoreBundle\Checkout\Step\PaymentStep</parameter>
-        <parameter key="sylius.checkout_step.do_payment.class">Sylius\Bundle\CoreBundle\Checkout\Step\DoPaymentStep</parameter>
+        <parameter key="sylius.checkout_step.purchase.class">Sylius\Bundle\CoreBundle\Checkout\Step\PurchaseStep</parameter>
         <parameter key="sylius.checkout_step.finalize.class">Sylius\Bundle\CoreBundle\Checkout\Step\FinalizeStep</parameter>
 
         <parameter key="sylius.order_processing.inventory_units_factory.class">Sylius\Bundle\CoreBundle\OrderProcessing\InventoryUnitsFactory</parameter>
@@ -102,11 +102,11 @@
             </call>
             <tag name="sylius.process.step" alias="sylius_checkout_payment" />
         </service>
-        <service id="sylius.checkout_step.do_payment" class="%sylius.checkout_step.do_payment.class%">
+        <service id="sylius.checkout_step.purchase" class="%sylius.checkout_step.purchase.class%">
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
-            <tag name="sylius.process.step" alias="sylius_checkout_do_payment" />
+            <tag name="sylius.process.step" alias="sylius_checkout_purchase" />
         </service>
         <service id="sylius.checkout_step.finalize" class="%sylius.checkout_step.finalize.class%">
             <call method="setContainer">

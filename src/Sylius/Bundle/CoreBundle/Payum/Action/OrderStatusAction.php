@@ -3,10 +3,8 @@ namespace Sylius\Bundle\CoreBundle\Payum\Action;
 
 use Payum\Action\PaymentAwareAction;
 use Payum\Exception\RequestNotSupportedException;
-use Payum\Request\CaptureTokenizedDetailsRequest;
 use Payum\Request\StatusRequestInterface;
 use Sylius\Bundle\CoreBundle\Model\Order;
-use Sylius\Bundle\CoreBundle\Model\PaypalPaymentDetails;
 
 class OrderStatusAction extends PaymentAwareAction
 {
@@ -27,6 +25,8 @@ class OrderStatusAction extends PaymentAwareAction
             $request->setModel($order->getDetails());
 
             $this->payment->execute($request);
+
+            $request->setModel($order);
         } else {
             $request->markNew();
         }
@@ -38,8 +38,8 @@ class OrderStatusAction extends PaymentAwareAction
     public function supports($request)
     {
         return
-            $request instanceof StatusRequestInterface
-            && $request->getModel() instanceof Order
+            $request instanceof StatusRequestInterface &&
+            $request->getModel() instanceof Order
         ;
     }
 }
