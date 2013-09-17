@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: sylius.yml }
+    - { resource: payum.yml }
 
 framework:
     translator:      { fallback: %sylius.locale% }
@@ -130,45 +131,3 @@ knp_snappy:
         enabled:    true
         binary:     /usr/bin/wkhtmltoimage
         options:    []
-
-payum:
-    security:
-        token_storage:
-            Sylius\Bundle\CoreBundle\Model\PaymentToken:
-                filesystem:
-                    storage_dir: %kernel.root_dir%/Resources/payments
-                    id_property: hash
-
-    contexts:
-        paypal_express_checkout:
-            paypal_express_checkout_nvp:
-                api:
-                    options:
-                        username:  %paypal.express_checkout.username%
-                        password:  %paypal.express_checkout.password%
-                        signature: %paypal.express_checkout.signature%
-                        sandbox: true
-                actions:
-                    - sylius.payum.action.capture_order_with_paypal
-                    - sylius.payum.action.order_status
-
-            storages:
-                Sylius\Bundle\CoreBundle\Model\Order:
-                    doctrine:
-                        driver: orm
-
-        stripe:
-            omnipay:
-                type: Stripe
-                options:
-                    apiKey:  %stripe.secret_key%
-                    testMode: true
-                actions:
-                    - sylius.payum.action.capture_order_with_stripe
-                    - sylius.payum.action.order_status
-
-            storages:
-                Sylius\Bundle\CoreBundle\Model\Order:
-                    doctrine:
-                        driver: orm
-                        payment_extension: true
