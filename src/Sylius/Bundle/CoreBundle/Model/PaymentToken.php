@@ -1,9 +1,9 @@
 <?php
 namespace Sylius\Bundle\CoreBundle\Model;
 
-use Payum\Model\TokenizedDetails as BaseTokenizedDetails;
+use Payum\Model\Token;
 
-class TokenizedDetails extends BaseTokenizedDetails
+class PaymentToken extends Token
 {
     /**
      * @var string

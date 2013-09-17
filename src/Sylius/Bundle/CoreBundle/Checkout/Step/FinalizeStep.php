@@ -38,6 +38,9 @@ class FinalizeStep extends CheckoutStep
      */
     public function forwardAction(ProcessContextInterface $context)
     {
+        $order = $this->createOrder($context);
+        $this->saveOrder($order);
+
         return $this->complete();
     }
 
@@ -47,5 +50,42 @@ class FinalizeStep extends CheckoutStep
             'context' => $context,
             'order'   => $order
         ));
+    }
+
+    /**
+     * Create order based on the checkout context.
+     *
+     * @param ProcessContextInterface $context
+     *
+     * @return OrderInterface
+     */
+    private function createOrder(ProcessContextInterface $context)
+    {
+        $order = $this->getCurrentCart();
+
+        $order->setUser($this->getUser());
+
+        $order->calculateTotal();
+        $this->get('event_dispatcher')->dispatch('sylius.order.pre_create', new GenericEvent($order));
+        $order->calculateTotal();
+
+        return $order;
+    }
+
+    /**
+     * Save given order.
+     *
+     * @param OrderInterface $order
+     */
+    protected function saveOrder(OrderInterface $order)
+    {
+        $manager = $this->get('sylius.manager.order');
+
+        $order->complete();
+
+        $manager->persist($order);
+        $manager->flush($order);
+
+        $this->get('event_dispatcher')->dispatch('sylius.order.post_create', new GenericEvent($order));
     }
 }

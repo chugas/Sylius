@@ -1,26 +1,24 @@
 <?php
 namespace Sylius\Bundle\CoreBundle\Checkout\Step;
 
-use Payum\Bundle\PayumBundle\Service\TokenManager;
+use Payum\Bundle\PayumBundle\Security\TokenFactory;
 use Payum\Registry\RegistryInterface;
 use Payum\Request\BinaryMaskStatusRequest;
+use Payum\Security\HttpRequestVerifierInterface;
 use Sylius\Bundle\CoreBundle\Model\OrderInterface;
 use Sylius\Bundle\FlowBundle\Process\Context\ProcessContextInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class DoPaymentStep extends CheckoutStep
+class PurchaseStep extends CheckoutStep
 {
     /**
      * {@inheritdoc}
      */
     public function displayAction(ProcessContextInterface $context)
     {
-        $order = $this->createOrder($context);
-        $this->saveOrder($order);
+        $order = $this->getCurrentCart();
 
-        $captureToken = $this->getPayumTokenManager()->createTokenForCaptureRoute(
+        $captureToken = $this->getTokenFactory()->createCaptureToken(
             $order->getPayment()->getMethod()->getGateway(),
             $order,
             'sylius_checkout_forward',
@@ -35,7 +33,9 @@ class DoPaymentStep extends CheckoutStep
      */
     public function forwardAction(ProcessContextInterface $context)
     {
-        $token = $this->getPayumTokenManager()->getTokenFromRequest($context->getRequest());
+        $token = $this->getHttpRequestVerifier()->verify($this->getRequest());
+        $this->getHttpRequestVerifier()->invalidate($token);
+
         $payment = $this->getPayum()->getPayment($token->getPaymentName());
 
         $status = new BinaryMaskStatusRequest($token);
@@ -44,7 +44,6 @@ class DoPaymentStep extends CheckoutStep
         /** @var OrderInterface $order */
         $order = $status->getModel();
 
-        //guard
         if (false == $order instanceof OrderInterface) {
             throw new \RuntimeException(sprintf('Expected order to be set as model but it is %s', get_class($order)));
         }
@@ -70,9 +69,6 @@ class DoPaymentStep extends CheckoutStep
 
         $this->getCartProvider()->abandonCart();
 
-        //prevent cheating on refreshing this page.
-        $this->getPayumTokenManager()->deleteToken($token);
-
         return $this->complete();
     }
 
@@ -85,47 +81,18 @@ class DoPaymentStep extends CheckoutStep
     }
 
     /**
-     * @return TokenManager
+     * @return TokenFactory
      */
-    protected function getPayumTokenManager()
+    protected function getTokenFactory()
     {
-        return $this->get('payum.token_manager');
+        return $this->get('payum.security.token_factory');
     }
 
     /**
-     * Create order based on the checkout context.
-     *
-     * @param ProcessContextInterface $context
-     *
-     * @return OrderInterface
+     * @return HttpRequestVerifierInterface
      */
-    private function createOrder(ProcessContextInterface $context)
+    protected function getHttpRequestVerifier()
     {
-        $order = $this->getCurrentCart();
-
-        $order->setUser($this->getUser());
-
-        $order->calculateTotal();
-        $this->get('event_dispatcher')->dispatch('sylius.order.pre_create', new GenericEvent($order));
-        $order->calculateTotal();
-
-        return $order;
-    }
-
-    /**
-     * Save given order.
-     *
-     * @param OrderInterface $order
-     */
-    protected function saveOrder(OrderInterface $order)
-    {
-        $manager = $this->get('sylius.manager.order');
-
-        $order->complete();
-
-        $manager->persist($order);
-        $manager->flush($order);
-
-        $this->get('event_dispatcher')->dispatch('sylius.order.post_create', new GenericEvent($order));
+        return $this->get('payum.security.http_request_verifier');
     }
 }

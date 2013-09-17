@@ -1,6 +1,7 @@
 <?php
 namespace Sylius\Bundle\CoreBundle\Payum\Action;
 
+use Payum\Request\SecuredCaptureRequest;
 use Sylius\Bundle\CoreBundle\Model\Order;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -11,7 +12,6 @@ use Payum\Action\PaymentAwareAction;
 use Payum\Registry\RegistryInterface;
 use Payum\Exception\RequestNotSupportedException;
 use Payum\Bundle\PayumBundle\Request\ResponseInteractiveRequest;
-use Payum\Request\CaptureTokenizedDetailsRequest;
 use Symfony\Component\Validator\Constraints\Range;
 
 class CaptureOrderWithStripeAction extends PaymentAwareAction
@@ -52,7 +52,7 @@ class CaptureOrderWithStripeAction extends PaymentAwareAction
      */
     public function execute($request)
     {
-        /** @var $request CaptureTokenizedDetailsRequest */
+        /** @var $request SecuredCaptureRequest */
         if (false == $this->supports($request)) {
             throw RequestNotSupportedException::createActionNotSupported($this, $request);
         }
@@ -80,7 +80,7 @@ class CaptureOrderWithStripeAction extends PaymentAwareAction
     public function supports($request)
     {
         return
-            $request instanceof CaptureTokenizedDetailsRequest &&
+            $request instanceof SecuredCaptureRequest &&
             $request->getModel() instanceof Order &&
             $request->getModel()->getDetails() === null
         ;
