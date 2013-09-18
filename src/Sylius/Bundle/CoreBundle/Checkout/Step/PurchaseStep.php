@@ -8,6 +8,7 @@ use Payum\Security\HttpRequestVerifierInterface;
 use Sylius\Bundle\CoreBundle\Model\OrderInterface;
 use Sylius\Bundle\FlowBundle\Process\Context\ProcessContextInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Payum\Request\SyncRequest;
 
 class PurchaseStep extends CheckoutStep
 {
@@ -33,11 +34,21 @@ class PurchaseStep extends CheckoutStep
      */
     public function forwardAction(ProcessContextInterface $context)
     {
-        $token = $this->getHttpRequestVerifier()->verify($this->getRequest());
+        /*$token = $this->getHttpRequestVerifier()->verify($this->getRequest());
         $this->getHttpRequestVerifier()->invalidate($token);
 
         $payment = $this->getPayum()->getPayment($token->getPaymentName());
 
+        $status = new BinaryMaskStatusRequest($token);
+        $payment->execute($status);*/
+      
+        $token = $this->getHttpRequestVerifier()->verify($this->getRequest());
+        $payment = $this->getPayum()->getPayment($token->getPaymentName());
+
+        try {
+            $payment->execute(new SyncRequest($token));
+        } catch (RequestNotSupportedException $e) {}
+        
         $status = new BinaryMaskStatusRequest($token);
         $payment->execute($status);
 
