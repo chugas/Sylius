@@ -90,7 +90,7 @@ class Order extends Cart implements OrderInterface, DetailsAwareInterface, Detai
 
         $this->inventoryUnits = new ArrayCollection();
         $this->shipments = new ArrayCollection();
-        $this->currency = 'EUR'; // @todo: Temporary
+        $this->currency = 'USD'; // @todo: Temporary
     }
 
     /**
